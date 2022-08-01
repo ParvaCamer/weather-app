@@ -14,28 +14,28 @@ export default {
 button {
     padding: 0.75rem 1.25rem;
     font-family: inherit;
-    background-color: #81B2B5;
-    border: 1px solid #81B2B5;
-    color: white;
+    background-color: #0a76db63;
+    border: 1px solid #0a76db63;
+    color: #ececec;
     cursor: pointer;
     border-radius: 50%;
 }
 
 button:hover,
 button:active {
-  background-color: #537375;
-  border-color: #537375;
+  background-color: #236099;
+  border-color: #236099;
 }
 
 .flat {
   background-color: transparent;
-  color: #120646;
+  color: #ececec;
   border: none;
 }
 
 .flat:hover,
 .flat:active {
-  background-color: rgba(156, 215, 219, 86);
+  background-color: #0a76db63;
   opacity: 75%;
 }
 </style>

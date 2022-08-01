@@ -15,7 +15,7 @@ export default {
             const today = new Date();
             const options = {weekday: 'long', month: 'long', day: 'numeric'}
             return new Intl.DateTimeFormat('en-US', options).format(today)
-        }
+        },
     }
 }
 </script>

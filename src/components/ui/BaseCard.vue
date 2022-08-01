@@ -11,5 +11,6 @@
     margin: 2rem auto;
     border-radius: 12px;
     padding: 1rem;
+    background-color: rgba(0, 11, 48, 0.26);
 }
 </style>
