@@ -1,6 +1,7 @@
 <template>
     <div v-for="resource in resourcesOneDay" :key="resource.id">
         <weather-information 
+            :city="cityName"
             :celcius="resource.celcius"
             :weather="resource.weather">
         </weather-information>
@@ -26,8 +27,8 @@ export default {
     },
     data() {
         return {
-            userPosition: null,
-            resourcesOneDay: []
+            resourcesOneDay: [],
+            cityName: ''
         }
     },
     mounted() {
@@ -36,30 +37,40 @@ export default {
         }
     },
     methods: {
-        getPosition(position) {
-            this.userPosition = {
-                lat: position.coords.latitude,
-                long: position.coords.longitude
-            }
-            this.getWeatherData();
-        },
-        getWeatherData() {
-            axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${this.userPosition.lat}&lon=${this.userPosition.long}&exclude={part}&appid=1e89e777e7ae940dd37bce76c14bd304&units=metric`)
-                .then(response => {
-                    const currentday = response.data.current
-                    console.log(response.data)
-                    const weatherCurrentDay = {
-                        celcius: Math.round(currentday.temp),
-                        weather: currentday.weather[0].main,
-                        uvi: currentday.uvi,
-                        humidity: currentday.humidity,
-                        pressure: currentday.pressure,
-                        windDegrees: currentday.wind_deg,
-                        windSpeed: currentday.wind_speed,
-                    }
-                    this.resourcesOneDay.push(weatherCurrentDay)
-                })
-        },
-    }
+    getPosition(position) {
+      const lat = position.coords.latitude;
+      const long = position.coords.longitude;
+      this.getWeatherData(lat, long);
+      this.getCity(lat, long);
+    },
+    getWeatherData(lat, long) {
+      axios
+        .get(
+          `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=1e89e777e7ae940dd37bce76c14bd304&units=metric`
+        )
+        .then((response) => {
+          const currentday = response.data.current;
+          const weatherCurrentDay = {
+            celcius: Math.round(currentday.temp),
+            weather: currentday.weather[0].main,
+            uvi: currentday.uvi,
+            humidity: currentday.humidity,
+            pressure: currentday.pressure,
+            windDegrees: currentday.wind_deg,
+            windSpeed: currentday.wind_speed,
+          };
+          this.resourcesOneDay.push(weatherCurrentDay);
+        });
+    },
+    getCity(lat, long) {
+      axios
+        .get(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyCKXKFzbZfMGUTju6JTgfaROABudepjWKU`
+        )
+        .then((response) => {
+          this.cityName = response.data.results[0].address_components[2].long_name
+        });
+    },
+  },
 }
 </script>

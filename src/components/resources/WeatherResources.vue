@@ -2,7 +2,9 @@
     <base-card class="weather-card">
         <base-button @click="setSelected('detail-one-day')" :mode="oneDayButtonMode">Today</base-button>
         <base-button @click="setSelected('detail-few-days')" :mode="fewDaysButtonMode">4 days</base-button>
-        <component :is="selected"></component>
+        <keep-alive>
+            <component :is="selected"></component>
+        </keep-alive>
     </base-card>
 </template>
 

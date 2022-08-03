@@ -12,13 +12,13 @@ export default {
 
 <style scoped>
 button {
-    padding: 0.75rem 1.25rem;
-    font-family: inherit;
-    background-color: #0a76db63;
-    border: 1px solid #0a76db63;
-    color: #ececec;
-    cursor: pointer;
-    border-radius: 50%;
+  padding: 0.75rem 1.25rem;
+  font-family: inherit;
+  background-color: #0a76db63;
+  border: 1px solid #0a76db63;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 50%;
 }
 
 button:hover,
@@ -29,7 +29,7 @@ button:active {
 
 .flat {
   background-color: transparent;
-  color: #ececec;
+  color: #ffffff;
   border: none;
 }
 
