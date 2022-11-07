@@ -13,6 +13,8 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-service": "~5.0.0"
+    "@vue/cli-service": "~5.0.0",
+    "sass": "^1.55.0",
+    "sass-loader": "^13.1.0"
   }
 }

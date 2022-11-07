@@ -4,13 +4,11 @@
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .card {
-    box-shadow: 0px 1px 2.5px rgba(0, 0, 0, 0.26);
-    max-width: 40rem;
-    margin: 2rem auto;
-    border-radius: 12px;
-    padding: 1rem;
-    background-color: rgba(0, 11, 48, 0.26);
+    margin: 20px 10px 30px 10px;
+    padding: 15px 0 15px 0;
+    border-radius: 15px;
+    background-color: #fdfdfdad;
 }
 </style>

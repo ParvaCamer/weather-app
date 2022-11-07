@@ -1,16 +1,15 @@
 <template>
-  <base-card class="few-days-card">
+  <card-info class="few-days-card">
+    <h4>{{ date }}</h4>
     <div>
-      <span>{{ weather }}</span>
-      <span>{{ humidity }}</span>
+      <img :src="weatherImage" />
+      <p>{{ weather }}</p>
     </div>
-    <div>
       <ul>
-        <li><span class="min">{{ minCelcius }}</span>°</li>
-        <li><span class="max">{{ maxCelcius }}</span>°</li>
+        <li class="max">{{ maxCelcius }}°</li>
+        <li class="min">{{ minCelcius }}°</li>
       </ul>
-    </div>
-  </base-card>
+  </card-info>
 </template>
 
 <script>
@@ -19,26 +18,48 @@ export default {
   components: {
     BaseCard
   },
-  props: ["weather", "minCelcius", "maxCelcius", "humidity"],
+  props: ["date", "weather", "minCelcius", "maxCelcius", "humidity"],
+  data() {
+    return {
+      weatherImage: require('@/assets/' + this.weather + '.png')
+    }
+  }
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .few-days-card {
-  max-width: 10rem;
-  display: flex;
-  justify-content: space-between;
-}
+  display: grid;
+  grid-template-columns: 0.7fr 0.3fr;
+  text-align: center;
+  align-items: center;
+  position: relative;
 
-ul {
-  list-style-type: none;
-}
+  h4 {
+    position: absolute;
+    top: -35px;
+    left: -5px;
+  }
 
-.min {
-  color: rgb(33, 116, 188);
-}
+  img {
+    width: 60px;
+  }
 
-.max {
-  color: rgb(210, 40, 40);
+  p {
+    font-size: 0.6rem;
+    text-align: left;
+  }
+
+  ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+
+    .max {
+      font-size: 1.3rem;
+    }
+  }
 }
 </style>

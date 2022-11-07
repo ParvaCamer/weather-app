@@ -5,7 +5,12 @@
             :celcius="resource.celcius"
             :weather="resource.weather">
         </weather-information>
+        <weather-hourly>
+          
+        </weather-hourly>
         <more-information
+            :sunrise="resource.sunrise"
+            :sunset="resource.sunset"
             :humidity="resource.humidity"
             :pressure="resource.pressure"
             :windDegrees="resource.windDegrees"
@@ -17,12 +22,14 @@
 
 <script>
 import WeatherInformation from '../../components/weather/WeatherInformation.vue';
+import WeatherHourly from '../../components/weather/WeatherHourly.vue';
 import MoreInformation from '../../components/weather/MoreInformation.vue';
 import axios from 'axios';
 
 export default {
     components: {
         WeatherInformation,
+        WeatherHourly,
         MoreInformation
     },
     data() {
@@ -49,8 +56,11 @@ export default {
           `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=1e89e777e7ae940dd37bce76c14bd304&units=metric`
         )
         .then((response) => {
+          console.log(response)
           const currentday = response.data.current;
           const weatherCurrentDay = {
+            sunrise: currentday.sunrise,
+            sunset: currentday.sunset,
             celcius: Math.round(currentday.temp),
             weather: currentday.weather[0].main,
             uvi: currentday.uvi,
