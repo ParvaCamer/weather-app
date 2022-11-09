@@ -54,18 +54,17 @@ export default {
     props: ['sunrise', 'sunset', 'humidity', 'pressure', 'windDegrees', 'windSpeed', 'uvi'],
     computed: {
         getSunrise() {
-            let unix_timestamp = this.sunrise;
-            var date = new Date(unix_timestamp * 1000);
+            var date = new Date(this.sunrise * 1000);
             var hours = date.getHours();
             var minutes = date.getMinutes();
             return hours + ":" + minutes
         },
         getSunset() {
-            let unix_timestamp = this.sunset;
-            var date = new Date(unix_timestamp * 1000);
+            var date = new Date(this.sunset * 1000);
             var hours = date.getHours();
             var minutes = date.getMinutes();
-            return hours + ":" + minutes
+            
+            return hours + ":" + minutes;
         },
         windSpeedPerHour() {
             return Math.round(this.windSpeed * 3.6)
@@ -124,6 +123,7 @@ h3 {
         label {
             position: relative;
             text-align: left;
+            font-size: 0.75rem;
         }
 
         p {
@@ -134,7 +134,6 @@ h3 {
         img {
             width: 2rem;
             float: right;
-            vertical-align: baseline;
         }
     }
 }

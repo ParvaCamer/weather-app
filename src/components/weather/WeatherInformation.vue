@@ -8,10 +8,15 @@
 
 <script>
 export default {
-    props: ['city', 'celcius', 'weather'],
+    props: ['city', 'celcius', 'weather', 'sendNight'],
     data() {
         return {
             weatherImage: require('@/assets/' + this.weather + '.png')
+        }
+    },
+    mounted() {
+        if (this.sendNight) {
+            this.weatherImage = require('@/assets/' + this.weather + 'Moon.png')
         }
     }
 }

@@ -1,23 +1,25 @@
 <template>
-    <div v-for="resource in resourcesOneDay" :key="resource.id">
-        <weather-information 
-            :city="cityName"
-            :celcius="resource.celcius"
-            :weather="resource.weather">
-        </weather-information>
-        <weather-hourly>
-          
-        </weather-hourly>
-        <more-information
-            :sunrise="resource.sunrise"
-            :sunset="resource.sunset"
-            :humidity="resource.humidity"
-            :pressure="resource.pressure"
-            :windDegrees="resource.windDegrees"
-            :windSpeed="resource.windSpeed"
-            :uvi="resource.uvi">
-        </more-information>
-    </div>
+  <div v-for="resource in resourcesOneDay" :key="resource.id">
+    <weather-information 
+      :city="cityName" 
+      :celcius="resource.celcius" 
+      :weather="resource.weather" 
+      :sendNight="isItTheNight()">
+    </weather-information>
+    <weather-hourly 
+    :hourly="resource.hourly"
+    :sendNight="isItTheNight()">
+    </weather-hourly>
+    <more-information 
+      :sunrise="resource.sunrise" 
+      :sunset="resource.sunset" 
+      :humidity="resource.humidity"
+      :pressure="resource.pressure" 
+      :windDegrees="resource.windDegrees" 
+      :windSpeed="resource.windSpeed"
+      :uvi="resource.uvi">
+    </more-information>
+  </div>
 </template>
 
 <script>
@@ -27,23 +29,23 @@ import MoreInformation from '../../components/weather/MoreInformation.vue';
 import axios from 'axios';
 
 export default {
-    components: {
-        WeatherInformation,
-        WeatherHourly,
-        MoreInformation
-    },
-    data() {
-        return {
-            resourcesOneDay: [],
-            cityName: ''
-        }
-    },
-    mounted() {
-      if (window.navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.getPosition)
-        }
-    },
-    methods: {
+  components: {
+    WeatherInformation,
+    WeatherHourly,
+    MoreInformation
+  },
+  data() {
+    return {
+      resourcesOneDay: [],
+      cityName: ''
+    }
+  },
+  mounted() {
+    if (window.navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.getPosition)
+    }
+  },
+  methods: {
     getPosition(position) {
       const lat = position.coords.latitude;
       const long = position.coords.longitude;
@@ -57,7 +59,12 @@ export default {
         )
         .then((response) => {
           console.log(response)
-          const currentday = response.data.current;
+          var currentday = response.data.current;
+          var hourlyCurrentDay = response.data.hourly;
+          let hourlyData = [];
+          for (let i = 0; i < 12; i++) {
+            hourlyData.push(hourlyCurrentDay[i])
+          }
           const weatherCurrentDay = {
             sunrise: currentday.sunrise,
             sunset: currentday.sunset,
@@ -68,6 +75,7 @@ export default {
             pressure: currentday.pressure,
             windDegrees: currentday.wind_deg,
             windSpeed: currentday.wind_speed,
+            hourly: hourlyData
           };
           this.resourcesOneDay.push(weatherCurrentDay);
         });
@@ -81,6 +89,20 @@ export default {
           this.cityName = response.data.results[0].address_components[2].long_name
         });
     },
+    isItTheNight() {
+      var now = new Date();
+      console.log('maintenant :', now.getTime())
+      var timeSunset = new Date(this.resourcesOneDay[0].sunset * 1000);
+      console.log('sunset :', timeSunset.getTime())
+      var timeSunrise = new Date(this.resourcesOneDay[0].sunrise * 1000);
+      console.log('sunrise: ', timeSunrise.getTime())
+      let isNight = false;
+      if ((now.getTime() <= timeSunrise.getTime()) || timeSunset.getTime() <= now.getTime()) {
+        console.log('il fait nuit')
+        isNight = true;
+      }
+      return isNight;
+    }
   },
 }
 </script>

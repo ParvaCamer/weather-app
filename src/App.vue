@@ -44,6 +44,10 @@ html {
   color: #304d6d;
   box-shadow: -20px -20px 60px #3d3d3d,
     20px 20px 60px rgb(0, 0, 0);
-  ;
+  overflow-x: auto;
+}
+
+#app::-webkit-scrollbar {
+  display: none;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <base-button @click="setSelected('detail-one-day')" :mode="oneDayButtonMode">Today</base-button>
-        <base-button @click="setSelected('detail-few-days')" :mode="fewDaysButtonMode">6 days</base-button>
+        <base-button @click="setSelected('detail-few-days')" :mode="fewDaysButtonMode">More days</base-button>
         <base-button id="button-search">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                 viewBox="0 0 16 16">
