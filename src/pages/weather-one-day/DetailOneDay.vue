@@ -1,5 +1,5 @@
 <template>
-  <div v-for="resource in resourcesOneDay" :key="resource.id">
+  <div class="div-detail-one-day" v-for="resource in resourcesOneDay" :key="resource.id">
     <weather-information 
       :city="cityName" 
       :celcius="resource.celcius" 
@@ -91,14 +91,10 @@ export default {
     },
     isItTheNight() {
       var now = new Date();
-      console.log('maintenant :', now.getTime())
       var timeSunset = new Date(this.resourcesOneDay[0].sunset * 1000);
-      console.log('sunset :', timeSunset.getTime())
       var timeSunrise = new Date(this.resourcesOneDay[0].sunrise * 1000);
-      console.log('sunrise: ', timeSunrise.getTime())
       let isNight = false;
       if ((now.getTime() <= timeSunrise.getTime()) || timeSunset.getTime() <= now.getTime()) {
-        console.log('il fait nuit')
         isNight = true;
       }
       return isNight;

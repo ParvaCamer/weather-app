@@ -1,6 +1,6 @@
 <template>
   <card-info class="few-days-card">
-    <h4>{{ date }}</h4>
+    <h5>{{ date }}</h5>
     <div>
       <img :src="weatherImage" />
       <p>{{ weather }}</p>
@@ -35,8 +35,9 @@ export default {
   align-items: center;
   position: relative;
 
-  h4 {
+  h5 {
     position: absolute;
+    font-size: 0.75rem;
     top: -35px;
     left: -5px;
   }

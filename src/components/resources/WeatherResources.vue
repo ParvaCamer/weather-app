@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="div-content">
         <the-header @send-tab="getTab"></the-header>
         <keep-alive>
             <component :is="selected"></component>

@@ -24,6 +24,13 @@ html {
   background-color: #545E75;
 }
 
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #app {
   background-image: url('@/assets/background.jpg');
   background-size: 260%;
