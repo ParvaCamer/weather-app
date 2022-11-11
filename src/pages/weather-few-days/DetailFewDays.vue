@@ -1,7 +1,7 @@
 <template>
-    <base-card>
-        <div class="grid-few-days">
-            <weather-more-days v-for="resource in resourcesFewDays" :key="resource.id" :date="resource.date"
+    <base-card class="grid-few-days">
+        <div  v-for="resource in resourcesFewDays" :key="resource.id">
+            <weather-more-days :key="componentKey" :date="resource.date"
                 :minCelcius="resource.minCelcius" :maxCelcius="resource.maxCelcius" :weather="resource.weather"
                 :humidity="resource.humidity">
             </weather-more-days>
@@ -19,9 +19,11 @@ export default {
         BaseCard,
         WeatherMoreDays
     },
+    props: ['newCoord'],
     data() {
         return {
-            resourcesFewDays: []
+            resourcesFewDays: [],
+            componentKey: 0
         }
     },
     mounted() {
@@ -29,17 +31,23 @@ export default {
             navigator.geolocation.getCurrentPosition(this.getPosition)
         }
     },
+    watch: {
+        newCoord() {
+            this.getWeatherData(this.newCoord.lat, this.newCoord.lon);
+            this.resourcesFewDays = [];
+            this.componentKey += 1;
+        }
+    },
     methods: {
         getPosition(position) {
-            this.userPosition = {
-                lat: position.coords.latitude,
-                long: position.coords.longitude
-            }
-            this.getWeatherData();
+            const lat = position.coords.latitude;
+            const long = position.coords.longitude;
+            this.getWeatherData(lat, long);
         },
-        getWeatherData() {
-            axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${this.userPosition.lat}&lon=${this.userPosition.long}&exclude={part}&appid=1e89e777e7ae940dd37bce76c14bd304&units=metric`)
+        getWeatherData(lat, long) {
+            axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=1e89e777e7ae940dd37bce76c14bd304&units=metric`)
                 .then(response => {
+                    console.log(response)
                     const daily = response.data.daily
                     for (let i = 0; i < 6; i++) {
                         var newDate = new Date(new Date().getTime() + ((i + 1) * 24 * 60 * 60 * 1000)) //to get the 5 next days

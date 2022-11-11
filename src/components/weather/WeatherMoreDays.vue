@@ -21,7 +21,7 @@ export default {
   props: ["date", "weather", "minCelcius", "maxCelcius", "humidity"],
   data() {
     return {
-      weatherImage: require('@/assets/' + this.weather + '.png')
+      weatherImage: require('@/assets/' + this.weather + '.png'),
     }
   }
 };

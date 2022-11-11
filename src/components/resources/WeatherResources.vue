@@ -1,8 +1,8 @@
 <template>
     <div class="div-content">
-        <the-header @send-tab="getTab"></the-header>
+        <the-header @send-tab="getTab" @send-newCoord="getNewCoord"></the-header>
         <keep-alive>
-            <component :is="selected"></component>
+            <component :is="selected" :newCoord="newCoord"></component>
         </keep-alive>
     </div>
 </template>
@@ -21,11 +21,15 @@ export default {
     data() {
         return {
             selected: 'detail-one-day',
+            newCoord: {}
         }
     },
     methods: {
         getTab(event) {
             this.selected = event
+        },
+        getNewCoord(value) {
+            this.newCoord = value;
         }
     }
 }

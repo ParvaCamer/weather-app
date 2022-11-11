@@ -1,16 +1,19 @@
 <template>
   <div class="div-detail-one-day" v-for="resource in resourcesOneDay" :key="resource.id">
     <weather-information 
+      :key="componentKey"
       :city="cityName" 
       :celcius="resource.celcius" 
       :weather="resource.weather" 
       :sendNight="isItTheNight()">
     </weather-information>
-    <weather-hourly 
+    <weather-hourly
+    :key="componentKey"
     :hourly="resource.hourly"
     :sendNight="isItTheNight()">
     </weather-hourly>
     <more-information 
+      :key="componentKey"
       :sunrise="resource.sunrise" 
       :sunset="resource.sunset" 
       :humidity="resource.humidity"
@@ -34,15 +37,26 @@ export default {
     WeatherHourly,
     MoreInformation
   },
+  props: ['newCoord'],
   data() {
     return {
       resourcesOneDay: [],
-      cityName: ''
+      cityName: '',
+      componentKey: 0
     }
   },
   mounted() {
     if (window.navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.getPosition)
+    }
+  },
+  watch: {
+    newCoord() {
+      console.log('ok')
+      this.getWeatherData(this.newCoord.lat, this.newCoord.lon);
+      this.getCity(this.newCoord.lat, this.newCoord.lon)
+      this.resourcesFewDays = [];
+      this.componentKey += 1;
     }
   },
   methods: {
@@ -86,6 +100,7 @@ export default {
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyCKXKFzbZfMGUTju6JTgfaROABudepjWKU`
         )
         .then((response) => {
+          console.log(response)
           this.cityName = response.data.results[0].address_components[2].long_name
         });
     },

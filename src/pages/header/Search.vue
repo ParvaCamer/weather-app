@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="search-box">
-            <input type="text" class="search-input" name="" placeholder="Search for a city here" v-model="cityName" @click="grabWeather">
+            <input type="text" class="search-input" name="" placeholder="Search for a city here" v-model="cityName" @keyup.enter="grabWeather">
             <span></span>
         </div>
     </div>
@@ -12,16 +12,21 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            cityName: 'Miami',
-            newCity: null
+            cityName: '',
         }
     },
     methods: {
         grabWeather() {
             axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.cityName}&appid=adf173dfdcd1a6aea78ba12651a19177`)
                 .then(response => {
-                    this.newCity = response.data;
-                    console.log(this.newCity)
+                    let data = response.data;
+                    console.log(data);
+                    var newCity = {
+                        lat: data.coord.lat,
+                        lon: data.coord.lon
+                    };
+                    this.$emit('send-newCoord', newCity);
+                    this.cityName = '';
                 })
         }
 

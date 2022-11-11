@@ -2,7 +2,7 @@
     <div class="content">
         <base-button @click="setSelected('detail-one-day')" :mode="oneDayButtonMode">Today</base-button>
         <base-button @click="setSelected('detail-few-days')" :mode="fewDaysButtonMode">More days</base-button>
-        <search></search>
+        <search @send-newCoord="getNewCoord"></search>
     </div>
 </template>
 
@@ -29,6 +29,9 @@ export default {
     methods: {
         setSelected(tab) {
             this.$emit('send-tab', tab)
+        },
+        getNewCoord(value) {
+            this.$emit('send-newCoord', value)
         }
     }
 }
