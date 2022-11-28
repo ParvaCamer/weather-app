@@ -46,7 +46,6 @@ export default {
         getWeatherData(lat, long) {
             axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=1e89e777e7ae940dd37bce76c14bd304&units=metric`)
                 .then(response => {
-                    console.log(response)
                     const daily = response.data.daily
                     for (let i = 0; i < 6; i++) {
                         var newDate = new Date(new Date().getTime() + ((i + 1) * 24 * 60 * 60 * 1000)) //to get the 6 next days

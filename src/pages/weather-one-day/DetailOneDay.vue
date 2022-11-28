@@ -39,7 +39,6 @@ export default {
   },
   watch: {
     newCoord() {
-      console.log(this.newCoord);
       this.resourcesOneDay = [];
       this.getWeatherData(this.newCoord.lat, this.newCoord.lon);
       this.getCity(this.newCoord.lat, this.newCoord.lon)
@@ -60,7 +59,6 @@ export default {
           `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=1e89e777e7ae940dd37bce76c14bd304&units=metric`
         )
         .then((response) => {
-          console.log(response)
           var currentday = response.data.current;
           var hourlyCurrentDay = response.data.hourly;
           let hourlyData = [];
@@ -89,7 +87,6 @@ export default {
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyCKXKFzbZfMGUTju6JTgfaROABudepjWKU`
         )
         .then((response) => {
-          console.log(response)
           this.cityName = response.data.results[0].address_components[2].long_name
         });
     },
