@@ -145,4 +145,10 @@ h3 {
     font-size: 0.85rem;
     text-align: left;
 }
+
+@media screen and (max-width: 408px) {
+    .content-info {
+        width: 100px !important;
+    }
+}
 </style>

@@ -17,6 +17,7 @@ export default {
     },
     methods: {
         grabWeather() {
+            console.log('oui')
             axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.cityName}&appid=adf173dfdcd1a6aea78ba12651a19177`)
                 .then(response => {
                     let data = response.data;

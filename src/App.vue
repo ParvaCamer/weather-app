@@ -57,4 +57,11 @@ body {
 #app::-webkit-scrollbar {
   display: none;
 }
+
+@media screen and (max-width: 408px) {
+    #app {
+      background-size: 330%;
+      background-position: 50%;
+    }
+}
 </style>

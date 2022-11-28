@@ -1,26 +1,13 @@
 <template>
   <div class="div-detail-one-day" v-for="resource in resourcesOneDay" :key="resource.id">
-    <weather-information 
-      :key="componentKey"
-      :city="cityName" 
-      :celcius="resource.celcius" 
-      :weather="resource.weather" 
+    <weather-information :key="componentKey" :city="cityName" :celcius="resource.celcius" :weather="resource.weather" :description="resource.description"
       :sendNight="isItTheNight()">
     </weather-information>
-    <weather-hourly
-    :key="componentKey"
-    :hourly="resource.hourly"
-    :sendNight="isItTheNight()">
+    <weather-hourly :key="componentKey" :hourly="resource.hourly" :sendNight="isItTheNight()">
     </weather-hourly>
-    <more-information 
-      :key="componentKey"
-      :sunrise="resource.sunrise" 
-      :sunset="resource.sunset" 
-      :humidity="resource.humidity"
-      :pressure="resource.pressure" 
-      :windDegrees="resource.windDegrees" 
-      :windSpeed="resource.windSpeed"
-      :uvi="resource.uvi">
+    <more-information :key="componentKey" :sunrise="resource.sunrise" :sunset="resource.sunset"
+      :humidity="resource.humidity" :pressure="resource.pressure" :windDegrees="resource.windDegrees"
+      :windSpeed="resource.windSpeed" :uvi="resource.uvi">
     </more-information>
   </div>
 </template>
@@ -52,7 +39,8 @@ export default {
   },
   watch: {
     newCoord() {
-      console.log('ok')
+      console.log(this.newCoord);
+      this.resourcesOneDay = [];
       this.getWeatherData(this.newCoord.lat, this.newCoord.lon);
       this.getCity(this.newCoord.lat, this.newCoord.lon)
       this.resourcesFewDays = [];
@@ -84,6 +72,7 @@ export default {
             sunset: currentday.sunset,
             celcius: Math.round(currentday.temp),
             weather: currentday.weather[0].main,
+            description: currentday.weather[0].description[0].toUpperCase() + currentday.weather[0].description.slice(1),
             uvi: currentday.uvi,
             humidity: currentday.humidity,
             pressure: currentday.pressure,
@@ -111,6 +100,9 @@ export default {
       let isNight = false;
       if ((now.getTime() <= timeSunrise.getTime()) || timeSunset.getTime() <= now.getTime()) {
         isNight = true;
+        const background = document.getElementById('app').style
+        background.backgroundImage = 'url(https://www.itl.cat/pngfile/big/186-1868057_blue-moon-night-sky-wallpaper-cloud-sky-night.jpg)';
+        background.backgroundPosition = '75%';
       }
       return isNight;
     }
